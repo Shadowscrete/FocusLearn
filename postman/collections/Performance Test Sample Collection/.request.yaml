@@ -1,0 +1,18 @@
+$kind: http-request
+name: ""
+url: http://localhost:8081/api/users
+method: GET
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\": \"newertestuser\",\r
+
+    \    \"email\": \"newertestuser@gmail.com\",\r
+
+    \    \"passwordHash\": \"testpassword123\",\r
+
+    \    \"role\": \"STUDENT\"\r
+
+    }"
+order: 1000

@@ -1,0 +1,21 @@
+﻿$kind: http-request
+method: GET
+url: '{{base_url}}/api/enrollments/:id'
+order: 2000
+pathVariables:
+  - key: id
+    value: '{{enrollmentId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Enrollment schema is valid", function () {
+          const enrollment = pm.response.json();
+          pm.expect(enrollment).to.have.property("enrollmentID").that.is.a("number");
+          pm.expect(enrollment).to.have.property("courseID").that.is.a("number");
+          pm.expect(enrollment).to.have.property("user");
+          pm.expect(enrollment).to.have.property("dateEnrolled");
+      });

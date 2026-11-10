@@ -1,0 +1,24 @@
+﻿$kind: http-request
+method: GET
+url: '{{base_url}}/api/accessibility-profiles'
+order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.be.an("array");
+      });
+      pm.test("Each profile has required fields", function () {
+          const json = pm.response.json();
+          json.forEach(function(profile) {
+              pm.expect(profile).to.have.property("profileID").that.is.a("number");
+              pm.expect(profile).to.have.property("fontFamily");
+              pm.expect(profile).to.have.property("fontSize");
+              pm.expect(profile).to.have.property("colorTheme");
+          });
+      });

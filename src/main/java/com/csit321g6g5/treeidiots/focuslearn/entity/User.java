@@ -2,11 +2,13 @@ package com.csit321g6g5.treeidiots.focuslearn.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity @Table(name="users")
 public class User {
  @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Integer userID;
  @Column(nullable=false, unique=true) private String username;
  @Column(nullable=false, unique=true) private String email;
+ @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
  @Column(nullable=false) private String passwordHash;
  @Column(nullable=false) private String role;
  private LocalDateTime createdAt=LocalDateTime.now();

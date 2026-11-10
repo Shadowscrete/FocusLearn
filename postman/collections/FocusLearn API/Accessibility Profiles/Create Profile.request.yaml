@@ -1,0 +1,38 @@
+﻿$kind: http-request
+method: POST
+url: '{{base_url}}/api/accessibility-profiles'
+order: 3000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "userID": {{userId}},
+      "fontFamily": "Arial",
+      "fontSize": 16,
+      "colorTheme": "light",
+      "focusModeDefault": false,
+      "ttsSpeed": 1.0,
+      "lineSpacing": 1.0,
+      "letterSpacing": 0.0
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Created profile has required fields", function () {
+          const profile = pm.response.json();
+          pm.expect(profile).to.have.property("profileID").that.is.a("number");
+          pm.expect(profile).to.have.property("fontFamily").that.is.a("string");
+          pm.expect(profile).to.have.property("colorTheme").that.is.a("string");
+          pm.expect(profile).to.not.have.property("user");
+      });
+      pm.test("profileId saved for chaining", function () {
+          const profile = pm.response.json();
+          pm.expect(profile.profileID).to.be.a("number");
+          pm.collectionVariables.set("profileId", profile.profileID);
+      });

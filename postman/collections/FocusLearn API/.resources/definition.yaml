@@ -1,0 +1,7 @@
+﻿$kind: collection
+name: FocusLearn API
+description: 'REST API for the FocusLearn platform. Set the base_url environment variable to http://localhost:8081 before sending requests.'
+variables:
+  userId: ''
+  enrollmentId: ''
+  profileId: ''

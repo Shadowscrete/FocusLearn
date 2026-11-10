@@ -1,0 +1,32 @@
+﻿$kind: http-request
+method: PUT
+url: '{{base_url}}/api/users/:id'
+order: 4000
+pathVariables:
+  - key: id
+    value: '{{userId}}'
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "johndoe_updated",
+      "email": "john_updated@example.com",
+      "passwordHash": "newpassword123",
+      "role": "student"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Updated user has correct fields", function () {
+          const user = pm.response.json();
+          pm.expect(user).to.have.property("userID").that.is.a("number");
+          pm.expect(user.username).to.equal("johndoe_updated");
+          pm.expect(user.email).to.equal("john_updated@example.com");
+          pm.expect(user).to.not.have.property("passwordHash");
+      });

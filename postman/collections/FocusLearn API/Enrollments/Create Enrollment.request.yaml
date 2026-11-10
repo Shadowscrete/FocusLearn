@@ -1,0 +1,31 @@
+﻿$kind: http-request
+method: POST
+url: '{{base_url}}/api/enrollments'
+order: 3000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "user": { "userID": {{userId}} },
+      "courseID": 1
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Created enrollment has required fields", function () {
+          const enrollment = pm.response.json();
+          pm.expect(enrollment).to.have.property("enrollmentID").that.is.a("number");
+          pm.expect(enrollment).to.have.property("courseID").that.is.a("number");
+          pm.expect(enrollment).to.have.property("user");
+      });
+      pm.test("enrollmentId saved for chaining", function () {
+          const enrollment = pm.response.json();
+          pm.expect(enrollment.enrollmentID).to.be.a("number");
+          pm.collectionVariables.set("enrollmentId", enrollment.enrollmentID);
+      });

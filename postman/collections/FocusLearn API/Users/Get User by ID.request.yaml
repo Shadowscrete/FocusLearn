@@ -1,0 +1,23 @@
+﻿$kind: http-request
+method: GET
+url: '{{base_url}}/api/users/:id'
+order: 2000
+pathVariables:
+  - key: id
+    value: '{{userId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("User schema is valid", function () {
+          const user = pm.response.json();
+          pm.expect(user).to.have.property("userID").that.is.a("number");
+          pm.expect(user).to.have.property("username").that.is.a("string");
+          pm.expect(user).to.have.property("email").that.is.a("string");
+          pm.expect(user).to.have.property("role").that.is.a("string");
+          pm.expect(user).to.have.property("createdAt");
+          pm.expect(user).to.not.have.property("passwordHash");
+      });

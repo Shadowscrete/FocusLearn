@@ -1,0 +1,23 @@
+﻿$kind: http-request
+method: GET
+url: '{{base_url}}/api/enrollments'
+order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is an array", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.be.an("array");
+      });
+      pm.test("Each enrollment has required fields", function () {
+          const json = pm.response.json();
+          json.forEach(function(enrollment) {
+              pm.expect(enrollment).to.have.property("enrollmentID").that.is.a("number");
+              pm.expect(enrollment).to.have.property("courseID").that.is.a("number");
+              pm.expect(enrollment).to.have.property("user");
+          });
+      });

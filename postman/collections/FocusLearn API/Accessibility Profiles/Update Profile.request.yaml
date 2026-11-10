@@ -1,0 +1,35 @@
+﻿$kind: http-request
+method: PUT
+url: '{{base_url}}/api/accessibility-profiles/:id'
+order: 4000
+pathVariables:
+  - key: id
+    value: '{{profileId}}'
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "userID": {{userId}},
+      "fontFamily": "OpenDyslexic",
+      "fontSize": 18,
+      "colorTheme": "dark",
+      "focusModeDefault": true,
+      "ttsSpeed": 1.25,
+      "lineSpacing": 1.5,
+      "letterSpacing": 0.05
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Updated profile has correct values", function () {
+          const profile = pm.response.json();
+          pm.expect(profile.fontFamily).to.equal("OpenDyslexic");
+          pm.expect(profile.colorTheme).to.equal("dark");
+          pm.expect(profile.focusModeDefault).to.equal(true);
+      });

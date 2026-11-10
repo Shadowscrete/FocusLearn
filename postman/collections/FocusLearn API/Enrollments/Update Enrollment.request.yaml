@@ -1,0 +1,28 @@
+﻿$kind: http-request
+method: PUT
+url: '{{base_url}}/api/enrollments/:id'
+order: 4000
+pathVariables:
+  - key: id
+    value: '{{enrollmentId}}'
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "user": { "userID": {{userId}} },
+      "courseID": 2
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Updated enrollment has correct fields", function () {
+          const enrollment = pm.response.json();
+          pm.expect(enrollment).to.have.property("enrollmentID").that.is.a("number");
+          pm.expect(enrollment.courseID).to.equal(2);
+      });

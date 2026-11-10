@@ -1,0 +1,26 @@
+﻿$kind: http-request
+method: GET
+url: '{{base_url}}/api/accessibility-profiles/:id'
+order: 2000
+pathVariables:
+  - key: id
+    value: '{{profileId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Profile schema is valid", function () {
+          const profile = pm.response.json();
+          pm.expect(profile).to.have.property("profileID").that.is.a("number");
+          pm.expect(profile).to.have.property("fontFamily");
+          pm.expect(profile).to.have.property("fontSize");
+          pm.expect(profile).to.have.property("colorTheme");
+          pm.expect(profile).to.have.property("focusModeDefault");
+          pm.expect(profile).to.have.property("ttsSpeed");
+          pm.expect(profile).to.have.property("lineSpacing");
+          pm.expect(profile).to.have.property("letterSpacing");
+          pm.expect(profile).to.not.have.property("user");
+      });
