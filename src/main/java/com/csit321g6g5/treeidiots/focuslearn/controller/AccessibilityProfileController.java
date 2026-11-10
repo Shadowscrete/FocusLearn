@@ -1,6 +1,6 @@
-package com.csitg5g6.focuslearn.controller;
-import com.csitg5g6.focuslearn.entity.AccessibilityProfile;
-import com.csitg5g6.focuslearn.repository.AccessibilityProfileRepository;
+package com.csit321g6g5.treeidiots.focuslearn.controller;
+import com.csit321g6g5.treeidiots.focuslearn.entity.AccessibilityProfile;
+import com.csit321g6g5.treeidiots.focuslearn.repository.AccessibilityProfileRepository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.List;

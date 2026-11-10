@@ -1,4 +1,4 @@
-package com.csitg5g6.focuslearn.entity;
+package com.csit321g6g5.treeidiots.focuslearn.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +11,6 @@ public class User {
  @Column(nullable=false) private String role;
  private LocalDateTime createdAt=LocalDateTime.now();
  @JsonIgnore @OneToOne(mappedBy="user", cascade=CascadeType.ALL) private AccessibilityProfile accessibilityProfile;
- @JsonIgnore @OneToOne(mappedBy="user", cascade=CascadeType.ALL) private UserStreak userStreak;
  public Integer getUserID(){return userID;} public void setUserID(Integer v){userID=v;}
  public String getUsername(){return username;} public void setUsername(String v){username=v;}
  public String getEmail(){return email;} public void setEmail(String v){email=v;}

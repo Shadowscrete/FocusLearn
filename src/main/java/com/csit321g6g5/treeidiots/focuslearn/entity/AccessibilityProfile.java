@@ -1,4 +1,4 @@
-package com.csitg5g6.focuslearn.entity;
+package com.csit321g6g5.treeidiots.focuslearn.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

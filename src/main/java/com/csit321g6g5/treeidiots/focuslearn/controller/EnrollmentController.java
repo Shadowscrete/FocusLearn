@@ -1,6 +1,6 @@
-package com.csitg5g6.focuslearn.controller;
-import com.csitg5g6.focuslearn.entity.Enrollment;
-import com.csitg5g6.focuslearn.repository.EnrollmentRepository;
+package com.csit321g6g5.treeidiots.focuslearn.controller;
+import com.csit321g6g5.treeidiots.focuslearn.entity.Enrollment;
+import com.csit321g6g5.treeidiots.focuslearn.repository.EnrollmentRepository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
